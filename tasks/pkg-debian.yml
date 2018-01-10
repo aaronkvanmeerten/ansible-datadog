@@ -5,4 +5,13 @@
 
 - apt_repository: repo='deb http://apt.datadoghq.com/ stable main' state=present update_cache=yes
 
+- name: check is datadog-agent exists
+  shell: dpkg -s datadog-agent | grep 'installed'
+  ignore_errors: yes
+  register: deb_check
+
+- name: remove datadog-agent if it exists
+  apt: name=datadog-agent state=absent purge=yes
+  when: deb_check.rc == 0
+
 - apt: name=datadog-agent state=latest
