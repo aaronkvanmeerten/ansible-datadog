@@ -23,7 +23,6 @@
     state: present
   when: datadog_apt_key_url_new is defined
 
-- apt: name=datadog-agent state=latest
 - name: Ensure Datadog non-https repositories are deprecated
   apt_repository:
     repo: "{{ item }}"
